@@ -52,7 +52,7 @@ const FormInput = <
       shouldUnregister={shouldUnregister}
       defaultValue={defaultValue}
       disabled={disabled}
-      render={({ fieldState }) => (
+      render={({ field, fieldState }) => (
         <FormItem>
           <FormLabel>{label ?? name}</FormLabel>
 
@@ -60,10 +60,17 @@ const FormInput = <
             {type === "password" ? (
               <Input.Password
                 isError={fieldState.error != undefined}
+                {...field}
                 {...restProps}
+                value={field.value ?? ""}
               />
             ) : (
-              <Input isError={fieldState.error != undefined} {...restProps} />
+              <Input
+                isError={fieldState.error != undefined}
+                {...field}
+                {...restProps}
+                value={field.value ?? ""}
+              />
             )}
           </FormControl>
 
