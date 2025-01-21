@@ -2,10 +2,21 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Brand from "@/components/ui/Brand";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import client from "@/lib/axios";
 import { cn } from "@/lib/utils";
-import { Home, Menu } from "lucide-react";
+import { CircleUserRound, Home, LogOut, Menu } from "lucide-react";
 
 export type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -15,6 +26,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const routes = [
     {
@@ -23,6 +35,19 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       url: "/dashboard",
     },
   ];
+
+  const logout = async () => {
+    try {
+      await client.post("api/auth/logout");
+
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      document.cookie =
+        "is_logged_in=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-row-reverse items-center">
@@ -34,6 +59,37 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           >
             <Menu />
           </button>
+
+          <div className="ml-auto">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarFallback>
+                    {localStorage
+                      .getItem("name")
+                      ?.split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>
+                  <div className="flex items-center gap-2">
+                    <CircleUserRound size={18} />
+                    <p>{localStorage.getItem("name")}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={logout}>
+                  <div className="flex items-center gap-2">
+                    <LogOut size={18} />
+                    Sign Out
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </header>
         <main className="py-8">{children}</main>
       </div>
@@ -41,7 +97,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 z-20 h-screen w-screen transition-opacity lg:transition-none lg:sticky lg:w-80",
+          "fixed left-0 z-20 h-screen w-screen transition-opacity lg:sticky lg:w-80 lg:transition-none",
           isSidebarVisible
             ? "opacity-100"
             : "pointer-events-none opacity-0 lg:pointer-events-auto lg:opacity-100",
