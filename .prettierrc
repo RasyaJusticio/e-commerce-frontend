@@ -3,6 +3,6 @@
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],
-  "importOrder": ["^react$", "<THIRD_PARTY_MODULES>"],
+  "importOrder": ["^react$", "^next$", "^next\/.*$", "<THIRD_PARTY_MODULES>"],
   "importOrderSortSpecifiers": true
 }

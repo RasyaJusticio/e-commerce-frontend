@@ -20,11 +20,7 @@ const LoggedInLayout: React.FC<GuestLayoutProps> = ({ children }) => {
     }
   }, [router]);
 
-  return (
-    <div className="grid items-center min-h-screen">
-      {showContent && children}
-    </div>
-  );
+  return <>{showContent && children}</>;
 };
 
 export default LoggedInLayout;
