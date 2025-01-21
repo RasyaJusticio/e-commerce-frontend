@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import FormInput from "@/components/forms/FormInput";
 import Brand from "@/components/ui/Brand";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { LoginSchema, loginSchema } from "@/features/auth";
+import { AuthedResponse, LoginSchema, loginSchema } from "@/features/auth";
 import client from "@/lib/axios";
-import { APIFailResponse } from "@/types/apiResponse";
+import { APIFailResponse, APISuccessResponse } from "@/types/apiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -17,11 +18,25 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const router = useRouter();
+
   const onSubmit = async (formData: LoginSchema) => {
-    console.log(formData);
     try {
-      const response = await client.post("api/auth/login", formData);
-      console.log(response.data);
+      const response = await client.post<APISuccessResponse<AuthedResponse>>(
+        "api/auth/login",
+        formData,
+      );
+
+      const data = response.data.data;
+
+      localStorage.setItem("name", data.user.name);
+      localStorage.setItem("role", data.user.role);
+
+      if (data.user.role === "admin") {
+        router.push("/dashboard");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
       if (axios.isAxiosError<APIFailResponse>(error)) {
