@@ -10,7 +10,7 @@ const oxygen = Oxygen({
 const Brand = () => {
   return (
     <div
-      className={`${oxygen.className} flex items-center justify-center w-fit text-2xl`}
+      className={`${oxygen.className} flex items-center justify-center w-fit text-3xl`}
     >
       <p className="text-emerald-400">Jscio</p>
       <p>store</p>
