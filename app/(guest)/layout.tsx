@@ -1,7 +1,8 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { isLoggedIn } from "@/features/auth";
 
 type GuestLayoutProps = {
   children: React.ReactNode;
@@ -9,15 +10,21 @@ type GuestLayoutProps = {
 
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
   const router = useRouter();
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("logged-in");
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       router.push("/");
+    } else {
+      setShowContent(true);
     }
   }, [router]);
 
-  return <>{!localStorage.getItem("logged-in") && children}</>;
+  return (
+    <div className="grid items-center min-h-screen">
+      {showContent && children}
+    </div>
+  );
 };
 
 export default GuestLayout;
