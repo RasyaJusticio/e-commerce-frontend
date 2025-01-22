@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Brand from "@/components/ui/Brand";
 import { cn } from "@/lib/utils";
-import { Home } from "lucide-react";
+import { Home, Tag } from "lucide-react";
 
 export type DashboardSidebarProps = {
   isSidebarVisible: boolean;
@@ -17,6 +17,11 @@ export const routes = [
     label: "Dashboard",
     Icon: Home,
     url: "/dashboard",
+  },
+  {
+    label: "Categories",
+    Icon: Tag,
+    url: "/dashboard/categories",
   },
 ];
 
@@ -54,7 +59,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             <Brand />
           </Link>
         </header>
-        <nav className="flex w-full flex-1 flex-col bg-zinc-900 px-6 py-8 lg:bg-zinc-950">
+        <nav className="flex w-full flex-1 flex-col gap-1 bg-zinc-900 px-6 py-8 lg:bg-zinc-950">
           {routes.map((route, index) => {
             const isCurrent = route.url === pathname;
 
@@ -68,6 +73,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 )}
               >
                 <route.Icon
+                  size={20}
                   className={cn(
                     isCurrent ? "text-emerald-500" : "text-zinc-400",
                   )}
