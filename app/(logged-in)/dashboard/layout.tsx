@@ -52,7 +52,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className="flex min-h-screen flex-row-reverse items-center">
       <div className="z-10 flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 flex h-16 w-full items-center border-b border-zinc-800 bg-zinc-900 px-4">
+        <header className="sticky top-0 flex h-16 w-full items-center border-b border-zinc-800 bg-zinc-900 px-4 md:px-5 lg:px-8">
           <button
             onClick={() => setSidebarVisible(true)}
             className="block size-9 text-zinc-500 hover:text-zinc-400 lg:hidden"
