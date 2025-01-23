@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     <div className="flex min-h-screen flex-row-reverse items-center">
       <div className="z-10 flex min-h-screen flex-1 flex-col">
         <DashboardHeader setSidebarVisible={setSidebarVisible} />
-        <main className="py-8">{children}</main>
+        <main className="px-6 py-8 px">{children}</main>
       </div>
 
       <DashboardSidebar
