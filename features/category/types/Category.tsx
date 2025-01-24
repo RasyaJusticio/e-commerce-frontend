@@ -27,7 +27,9 @@ const categoryColumns: ColumnDef<Category>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      return <DashboardRowAction data={row.original} />;
+      return (
+        <DashboardRowAction editLink={`categories/${row.original.id}/edit`} />
+      );
     },
   },
 ];
