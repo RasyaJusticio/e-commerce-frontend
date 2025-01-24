@@ -1,4 +1,5 @@
 import { CategoryCreateSchema } from "../schemas/createSchema";
+import { CategoryUpdateSchema } from "../schemas/updateSchema";
 import { Category } from "../types/Category";
 import client from "@/lib/axios";
 import { APISuccessResponse } from "@/types/apiResponse";
@@ -22,4 +23,15 @@ export const getCategories = async () => {
     "api/dashboard/categories",
   );
   return response.data.data;
+};
+
+export type UpdateCategoryProps = {
+  id: number;
+  data: CategoryUpdateSchema;
+};
+
+export const updateCategory = async ({ id, data }: UpdateCategoryProps) => {
+  const response = await client.put(`api/dashboard/categories/${id}`, data);
+
+  return response.data;
 };
