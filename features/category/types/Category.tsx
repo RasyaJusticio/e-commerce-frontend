@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 type Category = {
   id: number;
+  slug: string;
   name: string;
   created_at: string;
   updated_at: string;
