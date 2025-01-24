@@ -25,6 +25,17 @@ export const getCategories = async () => {
   return response.data.data;
 };
 
+export type GetCategoryData = {
+  category: Category;
+};
+
+export const getCategory = async (id: number) => {
+  const response = await client.get<APISuccessResponse<GetCategoryData>>(
+    `api/dashboard/categories/${id}`,
+  );
+  return response.data.data;
+};
+
 export type UpdateCategoryProps = {
   id: number;
   data: CategoryUpdateSchema;
