@@ -6,12 +6,10 @@ import DashboardSidebar from "@/features/dashboard/components/layout/Sidebar";
 
 export type DashboardLayoutProps = {
   children: React.ReactNode;
-  modal?: React.ReactNode;
 };
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   children,
-  modal,
 }) => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
@@ -28,7 +26,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           setSidebarVisible={setSidebarVisible}
         />
       </div>
-      {modal}
     </>
   );
 };
