@@ -52,9 +52,6 @@ const DashboardModal: React.FC<DashboardModalProps> = ({
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           {children}
-          <DialogFooter>
-            <Button type="submit">Create</Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     );
