@@ -19,6 +19,10 @@ const categoryColumns: ColumnDef<Category>[] = [
   {
     accessorKey: "updated_at",
     header: "Updated At",
+    cell: ({ getValue }) => {
+      const date = new Date(getValue() as string);
+      return date.toLocaleDateString();
+    },
   },
   {
     id: "actions",

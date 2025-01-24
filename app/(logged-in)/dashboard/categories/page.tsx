@@ -12,7 +12,7 @@ const DashboardCategories = () => {
 
   return (
     <>
-      <div className="mb-2 flex w-full items-center">
+      <div className="mb-6 flex w-full items-center">
         <h1 className="text-3xl font-bold">Categories</h1>
 
         <div className="ml-auto">
