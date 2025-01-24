@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,13 +14,16 @@ import {
 import { MoreHorizontal } from "lucide-react";
 
 export type DashboardRowActionProps = {
-  data: { id: number; slug?: string };
-  noView?: boolean;
-  noEdit?: boolean;
-  noDelete?: boolean;
+  viewLink?: string;
+  editLink?: string;
+  canDelete?: boolean;
 };
 
-const DashboardRowAction: React.FC<DashboardRowActionProps> = ({ data, noView, noEdit, noDelete }) => {
+const DashboardRowAction: React.FC<DashboardRowActionProps> = ({
+  viewLink,
+  editLink,
+  canDelete,
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,11 +35,21 @@ const DashboardRowAction: React.FC<DashboardRowActionProps> = ({ data, noView, n
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">View</DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer text-red-500">
-          Delete
-        </DropdownMenuItem>
+        {viewLink && (
+          <DropdownMenuItem className="cursor-pointer" asChild>
+            <Link href={viewLink}>View</Link>
+          </DropdownMenuItem>
+        )}
+        {editLink && (
+          <DropdownMenuItem className="cursor-pointer" asChild>
+            <Link href={editLink}>Edit</Link>
+          </DropdownMenuItem>
+        )}
+        {canDelete && (
+          <DropdownMenuItem className="cursor-pointer text-red-500">
+            Delete
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
