@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { AlertDialogProvider } from "@/components/AlertDialog";
 import DashboardHeader from "@/features/dashboard/components/layout/Header";
 import DashboardSidebar from "@/features/dashboard/components/layout/Sidebar";
 
@@ -8,13 +9,11 @@ export type DashboardLayoutProps = {
   children: React.ReactNode;
 };
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({
-  children,
-}) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
   return (
-    <>
+    <AlertDialogProvider>
       <div className="flex min-h-screen flex-row-reverse items-center">
         <div className="z-10 flex min-h-screen flex-1 flex-col">
           <DashboardHeader setSidebarVisible={setSidebarVisible} />
@@ -26,7 +25,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           setSidebarVisible={setSidebarVisible}
         />
       </div>
-    </>
+    </AlertDialogProvider>
   );
 };
 
