@@ -35,6 +35,7 @@ const DeleteRowButton: React.FC<{
       key={String(isDeleting)}
       variant={'destructive'}
       onClick={() => onDelete && onDelete(setIsOpen, setIsDeleting)}
+      disabled={isDeleting}
     >
       {isDeleting && <Loader2 className="animate-spin" />}
       Delete
