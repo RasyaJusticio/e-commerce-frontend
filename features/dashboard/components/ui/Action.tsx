@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAlertDialog } from "@/components/AlertDialog";
 import { Button } from "@/components/ui/button";
@@ -12,13 +12,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { Loader2, MoreHorizontal } from "lucide-react";
 
 export type DashboardRowActionProps = {
   viewLink?: string;
   editLink?: string;
   canDelete?: boolean;
-  onDelete?: (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) => void;
+  onDelete?: (
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => void;
+};
+
+const DeleteRowButton: React.FC<{
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onDelete?: DashboardRowActionProps["onDelete"];
+}> = ({ setIsOpen, onDelete }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  return (
+    <Button
+      key={String(isDeleting)}
+      variant={'destructive'}
+      onClick={() => onDelete && onDelete(setIsOpen, setIsDeleting)}
+    >
+      {isDeleting && <Loader2 className="animate-spin" />}
+      Delete
+    </Button>
+  );
 };
 
 const DashboardRowAction: React.FC<DashboardRowActionProps> = ({
@@ -58,8 +79,9 @@ const DashboardRowAction: React.FC<DashboardRowActionProps> = ({
                 title: "Are you absolutely sure?",
                 description:
                   "This action cannot be undone. This will permanently delete this category and remove it from the servers.",
-                actionLabel: "Delete",
-                onAction: onDelete,
+                actionLabel: (setIsOpen) => (
+                  <DeleteRowButton setIsOpen={setIsOpen} onDelete={onDelete} />
+                ),
               });
             }}
           >

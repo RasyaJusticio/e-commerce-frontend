@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { AlertDialogOpenProps } from "../types/alertDialogOpenProps";
 import {
   AlertDialogAction,
@@ -22,6 +24,10 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
   setIsOpen,
   props,
 }) => {
+  useEffect(() => {
+    console.log("AlertDialog re-rendered", props);
+  }, [props]);
+
   return (
     <UIAlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
@@ -58,7 +64,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
                 {props.actionLabel}
               </AlertDialogAction>
             ) : (
-              props.actionLabel(setIsOpen)
+              <>{props.actionLabel(setIsOpen)}</>
             )
           ) : (
             <AlertDialogAction

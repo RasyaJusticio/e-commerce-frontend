@@ -34,12 +34,14 @@ const categoryColumns: ColumnDef<Category>[] = [
         <DashboardRowAction
           editLink={`categories/${row.original.id}/edit`}
           canDelete
-          onDelete={(setIsOpen) => {
+          onDelete={(setIsOpen, setIsDeleting) => {
+            setIsDeleting(true);
             deleteMutation.mutate(
               { id: row.original.id },
               {
                 onSuccess: () => {
                   setIsOpen(false);
+                  setIsDeleting(false);
                 },
               },
             );
