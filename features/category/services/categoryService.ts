@@ -46,3 +46,13 @@ export const updateCategory = async ({ id, data }: UpdateCategoryProps) => {
 
   return response.data;
 };
+
+export type DeleteCategoryProps = {
+  id: number;
+};
+
+export const deleteCategory = async ({ id }: DeleteCategoryProps) => {
+  const response = await client.delete(`api/dashboard/categories/${id}`);
+
+  return response.data;
+};
