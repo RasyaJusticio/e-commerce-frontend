@@ -7,7 +7,6 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogPortal,
   AlertDialogTitle,
   AlertDialog as UIAlertDialog,
 } from "@/components/ui/alert-dialog";
@@ -48,7 +47,13 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
           {props?.actionLabel ? (
             typeof props.actionLabel === "string" ? (
               <AlertDialogAction
-                onClick={() => props?.onAction && props.onAction(setIsOpen)}
+                onClick={(event) => {
+                  event.preventDefault();
+
+                  if (props?.onAction) {
+                    props.onAction(setIsOpen);
+                  }
+                }}
               >
                 {props.actionLabel}
               </AlertDialogAction>
@@ -57,7 +62,13 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
             )
           ) : (
             <AlertDialogAction
-              onClick={() => props?.onAction && props.onAction(setIsOpen)}
+              onClick={(event) => {
+                event.preventDefault();
+
+                if (props?.onAction) {
+                  props.onAction(setIsOpen);
+                }
+              }}
             >
               Continue
             </AlertDialogAction>

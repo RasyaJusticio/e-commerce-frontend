@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useAlertDialog } from "@/components/AlertDialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,15 +18,19 @@ export type DashboardRowActionProps = {
   viewLink?: string;
   editLink?: string;
   canDelete?: boolean;
+  onDelete?: (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) => void;
 };
 
 const DashboardRowAction: React.FC<DashboardRowActionProps> = ({
   viewLink,
   editLink,
   canDelete,
+  onDelete,
 }) => {
+  const alertDialog = useAlertDialog();
+
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Open menu</span>
@@ -46,7 +51,18 @@ const DashboardRowAction: React.FC<DashboardRowActionProps> = ({
           </DropdownMenuItem>
         )}
         {canDelete && (
-          <DropdownMenuItem className="cursor-pointer text-red-500">
+          <DropdownMenuItem
+            className="cursor-pointer text-red-500"
+            onClick={() => {
+              alertDialog.open({
+                title: "Are you absolutely sure?",
+                description:
+                  "This action cannot be undone. This will permanently delete this category and remove it from the servers.",
+                actionLabel: "Delete",
+                onAction: onDelete,
+              });
+            }}
+          >
             Delete
           </DropdownMenuItem>
         )}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useDeleteCategoryMutation } from "../hooks/useDeleteMutation";
 import DashboardRowAction from "@/features/dashboard/components/ui/Action";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -27,8 +28,23 @@ const categoryColumns: ColumnDef<Category>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
+      const deleteMutation = useDeleteCategoryMutation();
+
       return (
-        <DashboardRowAction editLink={`categories/${row.original.id}/edit`} />
+        <DashboardRowAction
+          editLink={`categories/${row.original.id}/edit`}
+          canDelete
+          onDelete={(setIsOpen) => {
+            deleteMutation.mutate(
+              { id: row.original.id },
+              {
+                onSuccess: () => {
+                  setIsOpen(false);
+                },
+              },
+            );
+          }}
+        />
       );
     },
   },
